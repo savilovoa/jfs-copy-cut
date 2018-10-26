@@ -1,0 +1,14 @@
+<html>
+    <head>
+        {% if title %}
+        <title>{{title}} - copy-cut</title>
+        {% else %}
+        <title>1c copy-cut database</title>
+        {% endif %}
+    </head>
+    <body>
+        <div><h1>Copy and cut 1C database: </h1></div>
+        <hr>
+        {% block content %}{% endblock %}
+    </body>
+</html>

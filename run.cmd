@@ -1,0 +1,1 @@
+venv\scripts\python run.py
