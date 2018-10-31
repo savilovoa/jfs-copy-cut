@@ -10,18 +10,16 @@ exec_end = True
 
 def proc_thread():
     exec_end = False
-    out_logs.append('exec_end ' + str(exec_end))
     try:
         exec_status.append('start ping')
-        raise Exception('Oj')
+        #raise Exception('Oj')
         proc = subprocess.Popen("ping 127.0.0.1", shell=True, stdout=subprocess.PIPE)
         for out in proc.stdout.readlines():
             out_logs.append(out.decode("cp866"))
         exec_status.append('end ping')
-    except Exception as e:
+    except:
         out_logs.append('error')
-        print('error')
-        
+        print('error')        
     finally: 
         exec_end = True    
 
