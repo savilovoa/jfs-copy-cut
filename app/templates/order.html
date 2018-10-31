@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>Who-where</p>
+<form action="" method="post" name="userform">
+    {{form.hidden_tag()}}
+    <p>
+        Source database: {{form.DBName(size=1)}}<br>
+        Destination database: {{form.DBNameNew(size=40)}}<br>
+    </p>
+    <p>{{form.cut_f}} Cut?</p>
+    <p>{{form.rewrite_f}} Rewrite?</p>
+    <p><input type="submit" value="Start"></p>
+</form>
+{% endblock %}

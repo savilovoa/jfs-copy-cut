@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block content %}
+<p>New order <a href="/order">copy</a> </p>
+<p>{{dbname}} to {{dbnamenew}}, setting: cut={{cut}}, rewrite={{rewrite}}</p>
+<p>Status: <div id="session"></div> </p>  
+<div id="logs"></div>
+
+<script>  
+    var intervalID = 0
+    $(function() {
+        intervalID = setInterval(get_test, 10000)
+        //alert(intervalID)
+    });
+    function get_test() {
+        $.ajax({
+            type: "POST",
+            url: "/check_proc",            
+            success: function(response) {
+                var json = jQuery.parseJSON(response)
+                $("#session").html(json.status)
+                $("#logs").html(json.logs)
+                if (json.exec_end = true)
+                    {
+                        clearInterval(intervalID)
+                    }
+                    
+                console.log(response);
+            },
+            error: function(error) {
+                console.log(error);
+            }
+        });
+    }
+
+  
+  
+</script>
+  
+
+    
+{% endblock %}

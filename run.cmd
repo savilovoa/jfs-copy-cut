@@ -1,1 +1,1 @@
-venv\scripts\python run.py
+python run.py

@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8">
         {% if title %}
         <title>{{title}} - copy-cut</title>
         {% else %}
         <title>1c copy-cut database</title>
         {% endif %}
+        <script type="text/javascript" src={{ url_for('static', filename='jquery-3.3.1.min.js') }}></script>
     </head>
     <body>
         <div><h1>Copy and cut 1C database: </h1></div>

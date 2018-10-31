@@ -1,15 +1,8 @@
 {% extends "base.html" %}
 
 {% block content %}
-<p>Who-where</p>
-<form action="" method="post" name="userform">
-    {{form.hidden_tag()}}
-    <p>
-        Source database: {{form.DBName(size=1)}}<br>
-        Destination database: {{form.DBNameNew(size=40)}}<br>
-    </p>
-    <p>{{form.cut_f}} Cut?</p>
-    <p>{{form.rewrite_f}} Rewrite?</p>
-    <p><input type="submit" value="Start"></p>
-</form>
+<p>New <a href="/order">order copy 1C database</a> </p>
+<p>{{dbname}} to {{dbnamenew}}, setting: cut={{cut}}, rewrite={{rewrite}}</p>
+<p>{{sess}}</p>  
+<p>{{logs}}</p>
 {% endblock %}
