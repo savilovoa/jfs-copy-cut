@@ -3,13 +3,14 @@
 {% block content %}
 <p>New order <a href="/order">copy</a> </p>
 <p>{{dbname}} to {{dbnamenew}}, setting: cut={{cut}}, rewrite={{rewrite}}</p>
-<p>Status: <div id="session"></div> </p>  
+<p>Status:<b><div id="session"></div></b></p>
 <div id="logs"></div>
 
 <script>  
     var intervalID = 0
-    $(function() {
-        intervalID = setInterval(get_test, 10000)
+    $(function() {                
+        intervalID = setInterval(get_test, {{timerindex}})
+        get_test()
         //alert(intervalID)
     });
     function get_test() {
@@ -17,13 +18,23 @@
             type: "POST",
             url: "/check_proc",            
             success: function(response) {
-                var json = jQuery.parseJSON(response)
-                $("#session").html(json.status)
-                $("#logs").html(json.logs)
-                if (json.exec_end = true)
+                var json = jQuery.parseJSON(response)                
+                //alert(json.exec_end == false)
+                if (json.exec_end == false)
                     {
-                        clearInterval(intervalID)
-                    }
+                        //alert(intervalID);
+                        clearInterval(intervalID);
+                        
+                    };
+                //else {
+                //    alert('not false')
+                //};
+                $("#session").html(json.status)
+                var output = '';
+                $.each(json.logs, function(key, value){                
+                    output += '<p>'+value+'</p>';
+                });
+                $('#logs').append(output);                
                     
                 console.log(response);
             },

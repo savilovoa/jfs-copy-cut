@@ -1,7 +1,7 @@
 from flask import render_template, flash, redirect, g, session, url_for, json, jsonify, request
 from app import app
 from forms import UserForm
-from proc_cmd import exec_copy_cut, out_logs, exec_status, exec_end
+from proc_cmd import exec_copy_cut, out_logs, exec_status
 
 
 @app.route('/')
@@ -13,12 +13,13 @@ def index():
         else:
             return render_template('index.html', 
                 title = 'Process end',
-                sess = exec_status[len(exec_status)-1],
+                sess = app.config['EXEC_STATUS'][int(exec_status[len(exec_status)-1])],
                 dbname = session['dbname'],
-                dbnamenew = session['dbnamenew'],
+                dbnamenew = app.config['PROC_LIST'], # session['dbnamenew'],
                 cut = session['cut'],
                 rewrite = session['rewrite'],
-                logs = out_logs[len(out_logs)-1])
+                #logs = out_logs[len(out_logs)-1]
+                )                
     else:
         return redirect(url_for('copy_exec'))
         
@@ -33,6 +34,7 @@ def order():
         session['dbnamenew'] = form.DBNameNew.data
         session['cut'] = form.cut_f.data
         session['rewrite'] = form.rewrite_f.data
+        session['len_logs'] = 0
         exec_copy_cut()
         return redirect(url_for('copy_exec'))
         
@@ -49,17 +51,31 @@ def copy_exec():
         dbname = session['dbname'],
         dbnamenew = session['dbnamenew'],
         cut = session['cut'],
-        rewrite = session['rewrite'])
+        rewrite = session['rewrite'],
+        timerindex = app.config['TIMER'])
 
 
 
 @app.route('/check_proc', methods = ['GET', 'POST'])
 def check_proc():
-    if len(exec_status) > 0:
-        s = exec_status[len(exec_status)-1]
+    if exec_status[len(exec_status)-1]:
+        s = 'Execute' 
     else:
-        s = 'none'
-    return json.dumps({'status': s, 'exec_end': exec_end, 'logs': out_logs})
+        s = 'Stop'
+    l = len(out_logs)
+    if 'len_logs' in session:
+        l0 = session['len_logs']
+    else:
+        l0 = 0
+    ll = []
+    if l > 0:
+        for i in range(l0, l):
+            ll.append(out_logs[i]);
+    #print(l0, l, exec_status[len(exec_status)-1], ll, out_logs)
+    #print(json.dumps({'logs': ll, 'exec_end': exec_status[len(exec_status)-1]}))
+    session['len_logs'] = l
+    return json.dumps({'status': s, 'exec_end': exec_status[len(exec_status)-1], 'logs_count': l-1,'logs': ll})
+
 
     
     
