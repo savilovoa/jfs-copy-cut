@@ -7,7 +7,8 @@ TIMER = 1000
 
 EXEC_STATUS = ['Stop', 'Execute']
 
-PROC_LIST = [['ping', 
-'ping 127.0.0.1'], 
-['test2', 'ping 8.8.8.8']]
+PROC_LIST = [['backup', 
+'"bin/backup.cmd" {} {} {} '], 
+['restore', 
+ '"bin/restore.cmd" {} {} {}  ']]
               

@@ -5,10 +5,12 @@ from proc_cmd import exec_copy_cut, out_logs, exec_status
 
 
 @app.route('/')
-@app.route('/index')
+@app.route('/index', methods = ['GET'])
 def index():    
-    if exec_end:
-        if len(exec_status) <= 0:
+    if exec_status[len(exec_status)-1]:
+        return redirect(url_for('copy_exec'))
+    else:
+        if len(out_logs) <= 0:
             return redirect(url_for('order'))
         else:
             return render_template('index.html', 
@@ -19,13 +21,8 @@ def index():
                 cut = session['cut'],
                 rewrite = session['rewrite'],
                 #logs = out_logs[len(out_logs)-1]
-                )                
-    else:
-        return redirect(url_for('copy_exec'))
+                )                       
         
-
-
-
 @app.route('/order', methods = ['GET', 'POST'])
 def order():
     form = UserForm()
@@ -35,7 +32,7 @@ def order():
         session['cut'] = form.cut_f.data
         session['rewrite'] = form.rewrite_f.data
         session['len_logs'] = 0
-        exec_copy_cut()
+        exec_copy_cut(form.DBName.data, form.DBNameNew.data, form.cut_f.data, form.rewrite_f.data)
         return redirect(url_for('copy_exec'))
         
     return render_template('order.html', 
