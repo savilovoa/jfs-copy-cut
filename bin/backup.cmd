@@ -12,5 +12,5 @@ set srv=id-1c
 set user=admin_dev
 set pass=Q12345!
 set db=%1
-set back_fn=d:\b_%db%.bkp
-sqlcmd -S %srv% -U %user% -P %pass% -Q BACKUP DATABASE %db% TO  DISK = %back_fn% WITH NOFORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10
+set back_fn=d:\bkp\b_%db%.bkp
+sqlcmd -S %srv% -U %user% -P %pass% -Q "BACKUP DATABASE %db% TO  DISK = '%back_fn%' WITH NOFORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10"
