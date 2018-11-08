@@ -31,7 +31,7 @@ def order():
         session['dbnamenew'] = form.DBNameNew.data
         session['cut'] = form.cut_f.data
         session['rewrite'] = form.rewrite_f.data
-        session['len_logs'] = 0
+        session['len_logs'] = 0        
         exec_copy_cut(form.DBName.data, form.DBNameNew.data, form.cut_f.data, form.rewrite_f.data)
         return redirect(url_for('copy_exec'))
         

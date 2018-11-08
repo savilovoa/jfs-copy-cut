@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 CSRF_ENABLED = True
 SECRET_KEY = 'you-will-never-guess'
 
@@ -8,7 +9,7 @@ TIMER = 1000
 EXEC_STATUS = ['Stop', 'Execute']
 
 PROC_LIST = [['backup', 
-'"bin/backup.cmd" {} {} {} '], 
+"sqlcmd -S id-1c -U admin_dev -P Q12345! -Q \"BACKUP DATABASE {} TO  DISK = '\\id-olap\python-backup\b_j1.bkp' WITH NOFORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10\""], 
 ['restore', 
  '"bin/restore.cmd" {} {} {}  ']]
               
