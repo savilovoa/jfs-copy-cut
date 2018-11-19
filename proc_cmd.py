@@ -32,12 +32,15 @@ def proc_thread(dbname, dbnamenew, cut_f, rewrite_f):
     code = 0
     out = []
     err = []
+    if not app.debug:
+        app.logger.info('{}: {} {}'.format('Exec copy-cut: ', dbname, dbnamenew))            
     try:
         exec_status.append(True)    
+        
         for p in p_list:
             if not app.debug:
-                app.logger.info(p[0]  + ':' + p[1].format(dbname, dbname))            
-            out_logs.append("Start " + p[0]) 
+                app.logger.info('{}: Start'.format(p[0]))            
+            out_logs.append('Start {}'.format(p[0])) 
             
             #out_logs.append(p[1].format(dbname=dbname, dbnamenew=dbnamenew, srv_name=SRV_NAME, srv_user=SRV_USER,
             #                                    srv_passwd=SRV_PASSWD, path_backup=PATH_BACKUP,
@@ -58,17 +61,20 @@ def proc_thread(dbname, dbnamenew, cut_f, rewrite_f):
                            
             if t:
                 out_logs.append('{} - завершено успешно'.format(p[0]))
+                if not app.debug:
+                    app.logger.info('{} - завершено успешно'.format(p[0]))            
             else:
-                out_logs.append('{} = Error: {}'.format(p[0], err) )              
+                out_logs.append('{} = Error: {}'.format(p[0], err))
+                if not app.debug:
+                    app.logger.info('{} = Error: {}'.format(p[0], err) )
                 Break
             
                 
     except:
         out_logs.append('error1')
-        print('error1')   
-        print (code)
-        print(out)
-        print(err)        
+        if not app.debug:
+            app.logger.info('{} = Error'.format(p[0]))
+        
     finally: 
         exec_status.append(False)    
         #print(exec_status[len(exec_status)-1])
