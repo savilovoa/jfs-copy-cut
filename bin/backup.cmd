@@ -1,3 +1,12 @@
 echo off
-#sqlcmd -S id-1c -U admin_dev -P Q12345! -Q "BACKUP DATABASE %1 TO  DISK = '\\id-olap\python-bakup\b_%1.bkp' WITH NOFORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10"
-ping 8.8.8.8
+set srvsql=%1
+set username=%2
+set passwd=%3
+set dbname=%4
+set dbnamenew=%5
+set pathbackup=%6
+sqlcmd -S %srvsql% -U %username% -P %passwd% -Q "BACKUP DATABASE %dbname% TO  DISK = '%pathbackup%\b_%dbname%.bkp' WITH NOFORMAT, INIT, SKIP, NOREWIND, NOUNLOAD, STATS = 10"
+rem echo Test backup
+rem ls -l
+rem echo "�ᯥ譮" 
+
